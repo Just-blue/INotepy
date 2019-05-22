@@ -564,7 +564,7 @@ c.JupyterHub.port = 8005
 #  environment variables. Most, including the default, do not. Consult the
 #  documentation for your spawner to verify!
 
-c.Spawner.cmd = ['jupyter-labhub']
+c.Spawner.cmd = ['jupyterhub-singleuser']
 
 ## Maximum number of consecutive failures to allow before shutting down
 #  JupyterHub.
