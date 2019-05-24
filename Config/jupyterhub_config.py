@@ -1,5 +1,9 @@
 # Configuration file for jupyterhub.
 
+import os
+if not os.path.exists('.jupyter'):
+    os.mkdir('.jupyter')
+
 #------------------------------------------------------------------------------
 # Application(SingletonConfigurable) configuration
 #------------------------------------------------------------------------------
@@ -160,8 +164,10 @@ c.JupyterHub.authenticator_class = 'jupyterhub.auth.PAMAuthenticator'
 #  Should be exactly 256 bits (32 bytes).
 #c.JupyterHub.cookie_secret = b''
 
+
+
 ## File in which to store the cookie secret.
-#c.JupyterHub.cookie_secret_file = 'jupyterhub_cookie_secret'
+c.JupyterHub.cookie_secret_file = '.jupyter/jupyterhub_cookie_secret'
 
 ## The location of jupyterhub data files (e.g. /usr/local/share/jupyterhub)
 #c.JupyterHub.data_files_path = '/usr/local/share/jupyterhub'
@@ -171,7 +177,7 @@ c.JupyterHub.authenticator_class = 'jupyterhub.auth.PAMAuthenticator'
 #c.JupyterHub.db_kwargs = {}
 
 ## url for the database. e.g. `sqlite:///jupyterhub.sqlite`
-#c.JupyterHub.db_url = 'sqlite:///jupyterhub.sqlite'
+c.JupyterHub.db_url = 'sqlite:///.jupyter/jupyterhub.sqlite'
 
 ## log all database transactions. This has A LOT of output
 #c.JupyterHub.debug_db = False
@@ -344,7 +350,7 @@ c.JupyterHub.authenticator_class = 'jupyterhub.auth.PAMAuthenticator'
 #c.JupyterHub.named_server_limit_per_user = 0
 
 ## File to write PID Useful for daemonizing JupyterHub.
-#c.JupyterHub.pid_file = ''
+c.JupyterHub.pid_file = '.jupyter/JupyterHub_pid'
 
 ## The public facing port of the proxy.
 #  
@@ -711,7 +717,11 @@ c.Spawner.default_url = '/lab'
 #  
 #  Note that this does *not* prevent users from accessing files outside of this
 #  path! They can do so with many other means.
-c.Spawner.notebook_dir = '~'
+
+root_path = '~'
+if os.path.exists(root_path):
+    root_path = '~/INotepy'
+c.Spawner.notebook_dir = root_path
 
 ## An HTML form for options a user can specify on launching their server.
 #  
@@ -818,7 +828,7 @@ c.Spawner.notebook_dir = '~'
 #  Admin access should be treated the same way root access is.
 #  
 #  Defaults to an empty set, in which case no user has admin access.
-c.Authenticator.admin_users = set({'haozhiqing'})
+c.Authenticator.admin_users = set({'blue'})
 
 ## The max age (in seconds) of authentication info before forcing a refresh of
 #  user auth info.
